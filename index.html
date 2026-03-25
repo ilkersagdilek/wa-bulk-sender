@@ -16,6 +16,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .app-header-title{font-size:15px;font-weight:700;color:#FFFFF0;font-family:'Poppins',sans-serif;letter-spacing:0.2px;}
 .app-header-sub{font-size:11px;color:rgba(255,255,240,0.45);margin-top:2px;}
 .wa-icon-header{width:36px;height:36px;border-radius:8px;background:rgba(37,211,102,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.settings-btn{margin-left:auto;background:transparent;border:none;cursor:pointer;padding:6px;border-radius:6px;display:flex;align-items:center;opacity:0.5;transition:opacity 0.15s;}
+.settings-btn:hover{opacity:1;}
+.settings-panel{background:#162338;border-bottom:1px solid rgba(42,183,177,0.15);padding:12px 20px;display:none;}
+.settings-panel.open{display:block;}
+.settings-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.settings-label{font-size:12px;color:rgba(255,255,240,0.7);}
+.wa-toggle{display:flex;gap:4px;background:rgba(255,255,240,0.07);border-radius:8px;padding:3px;}
+.wa-toggle button{font-size:12px;padding:5px 12px;border:none;border-radius:6px;cursor:pointer;background:transparent;color:rgba(255,255,240,0.5);font-weight:500;transition:all 0.15s;}
+.wa-toggle button.active{background:#2AB7B1;color:#1B2C48;font-weight:700;}
+.ios-note{font-size:11px;color:rgba(255,200,0,0.8);margin-top:8px;line-height:1.5;display:none;}
+.ios-note.show{display:block;}
 .body{background:#FFFFF0;padding:20px;}
 .dz{border:1.5px dashed rgba(42,183,177,0.4);border-radius:10px;padding:28px 24px;text-align:center;cursor:pointer;margin-bottom:16px;transition:border-color 0.15s,background 0.15s;}
 .dz:hover{border-color:#2AB7B1;background:rgba(42,183,177,0.04);}
@@ -65,6 +76,21 @@ textarea:focus{border-color:#2AB7B1;}
     <div>
       <div class="app-header-title">NEXE — Toplu WA Gönder</div>
       <div class="app-header-sub">Dosya yükle, mesajını yaz, hepsine gönder</div>
+    </div>
+    <button class="settings-btn" onclick="toggleSettings()" title="Ayarlar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFF0" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-row">
+      <span class="settings-label">Hangi WhatsApp ile gönder?</span>
+      <div class="wa-toggle">
+        <button id="btnWA" onclick="setWAType('normal')">WhatsApp</button>
+        <button id="btnBusiness" onclick="setWAType('business')">Business</button>
+      </div>
+    </div>
+    <div class="ios-note" id="iosNote">
+      ⚠️ iPhone'da hangi WhatsApp'ın açılacağını iOS belirler. Business'ın açılmasını garantilemek için kişisel WhatsApp'ı geçici olarak silebilirsiniz.
     </div>
   </div>
   <div class="body">
