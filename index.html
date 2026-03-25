@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NEXE â Toplu WA GÃ¶nder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f0f0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:16px;}
+.app{background:#1B2C48;border-radius:14px;overflow:hidden;width:100%;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.18);}
+.app-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(42,183,177,0.2);}
+.app-header-title{font-size:15px;font-weight:700;color:#FFFFF0;font-family:'Poppins',sans-serif;letter-spacing:0.2px;}
+.app-header-sub{font-size:11px;color:rgba(255,255,240,0.45);margin-top:2px;}
+.wa-icon-header{width:36px;height:36px;border-radius:8px;background:rgba(37,211,102,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.body{background:#FFFFF0;padding:20px;}
+.dz{border:1.5px dashed rgba(42,183,177,0.4);border-radius:10px;padding:28px 24px;text-align:center;cursor:pointer;margin-bottom:16px;transition:border-color 0.15s,background 0.15s;}
+.dz:hover{border-color:#2AB7B1;background:rgba(42,183,177,0.04);}
+.dz p{color:#1B2C48;font-size:14px;margin:8px 0 0;}
+.dz small{color:rgba(27,44,72,0.4);font-size:12px;margin-top:4px;display:block;}
+.stats-bar{display:flex;gap:8px;margin-bottom:14px;}
+.stat-box{flex:1;background:#1B2C48;border-radius:8px;padding:10px;text-align:center;}
+.stat-n{font-size:22px;font-weight:600;color:#2AB7B1;}
+.stat-l{font-size:10px;color:rgba(255,255,240,0.5);margin-top:2px;line-height:1.3;}
+.stat-box.sent .stat-n{color:#25D366;}
+.stat-box.rem .stat-n{color:#EAB308;}
+.section-lbl{font-size:11px;font-weight:600;color:rgba(27,44,72,0.4);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;}
+textarea{width:100%;font-size:13px;line-height:1.6;background:white;border:0.5px solid rgba(27,44,72,0.12);border-radius:8px;padding:10px;resize:vertical;color:#1B2C48;font-family:inherit;outline:none;}
+textarea:focus{border-color:#2AB7B1;}
+.msg-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.copy-btn{font-size:12px;padding:4px 10px;background:transparent;border:0.5px solid rgba(27,44,72,0.18);color:#1B2C48;border-radius:6px;cursor:pointer;}
+.copy-btn:hover{background:rgba(27,44,72,0.05);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin:14px 0 8px;}
+.send-all-btn{font-size:13px;padding:7px 16px;background:rgba(37,211,102,0.1);border:0.5px solid rgba(37,211,102,0.4);color:#166534;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap;transition:background 0.15s;}
+.send-all-btn:hover{background:rgba(37,211,102,0.18);}
+.send-all-btn.progress{background:rgba(37,211,102,0.06);color:#0f4d26;cursor:default;}
+.send-all-btn.done{background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.6);}
+.pc{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:0.5px solid rgba(27,44,72,0.1);border-radius:8px;margin-bottom:6px;background:white;transition:border-color 0.2s,background 0.2s;}
+.pc.sent{border-color:rgba(37,211,102,0.4);background:rgba(37,211,102,0.04);}
+.pc-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.pn{font-size:12px;color:rgba(27,44,72,0.3);min-width:20px;flex-shrink:0;}
+.pm{font-size:14px;font-weight:500;color:#1B2C48;}
+.pt{font-size:12px;color:rgba(27,44,72,0.45);font-family:monospace;margin-top:1px;}
+.pc-right{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.wa-btn{display:flex;align-items:center;gap:5px;padding:5px 10px;border:0.5px solid rgba(37,211,102,0.4);border-radius:6px;background:transparent;cursor:pointer;font-size:12px;color:#166534;font-weight:500;transition:background 0.15s,border-color 0.15s;}
+.wa-btn:hover{background:rgba(37,211,102,0.1);}
+.wa-btn.sent{border-color:rgba(37,211,102,0.65);background:rgba(37,211,102,0.1);color:#0f5c2a;}
+.reset-btn{font-size:12px;padding:4px 10px;background:transparent;border:0.5px solid rgba(27,44,72,0.15);color:rgba(27,44,72,0.45);border-radius:6px;cursor:pointer;}
+.reset-btn:hover{border-color:rgba(27,44,72,0.3);color:#1B2C48;}
+.toast{padding:8px 16px;border-radius:8px;font-size:13px;text-align:center;margin-top:12px;display:none;}
+.toast.s{background:#1B2C48;color:#2AB7B1;border:0.5px solid #2AB7B1;}
+.toast.e{background:#fff0f0;color:#dc3545;border:0.5px solid rgba(220,53,69,0.3);}
+#main{display:none;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="app-header">
+    <div class="wa-icon-header">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </div>
+    <div>
+      <div class="app-header-title">NEXE â Toplu WA GÃ¶nder</div>
+      <div class="app-header-sub">CSV yÃ¼kle, mesajÄ±nÄ± yaz, hepsine gÃ¶nder</div>
+    </div>
+  </div>
+  <div class="body">
+
+    <div class="dz" id="dz" onclick="document.getElementById('fi').click()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2AB7B1" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p>CSV dosyasÄ±nÄ± buraya sÃ¼rÃ¼kle veya tÄ±kla</p>
+      <small>Ä°sim ve telefon sÃ¼tunlarÄ± otomatik algÄ±lanÄ±r Â· , ve ; desteklenir</small>
+      <input type="file" id="fi" accept=".csv" style="display:none">
+    </div>
+
+    <div id="main">
+      <div class="stats-bar" id="statsBar"></div>
+
+      <div style="margin-bottom:14px;">
+        <div class="msg-row">
+          <p class="section-lbl" style="margin:0">Mesaj Åablonu</p>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('msg').value).then(()=>toast('KopyalandÄ±!','s'))">Kopyala</button>
+        </div>
+        <textarea id="msg" rows="8" placeholder="GÃ¶ndermek istediÄiniz mesajÄ± buraya yazÄ±nâ¦"></textarea>
+      </div>
+
+      <div class="card-header">
+        <p class="section-lbl" style="margin:0" id="listLbl"></p>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="reset-btn" onclick="resetSent()">SÄ±fÄ±rla</button>
+          <button class="send-all-btn" id="sendAllBtn" onclick="startSendAll()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:4px"><polyline points="22 2 11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Hepsine GÃ¶nder
+          </button>
+        </div>
+      </div>
+      <div id="cards"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+
+<script>
+const WA_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+
+let people=[], sentSet=new Set(), sendQueue=[], sendIdx=0, sendActive=false;
+
+// ââ CSV Parse ââââââââââââââââââââââââââââââââââââââââââââââ
+const dz=document.getElementById('dz'), fi=document.getElementById('fi');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='#2AB7B1';});
+dz.addEventListener('dragleave',()=>dz.style.borderColor='');
+dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='';const f=e.dataTransfer.files[0];if(f)load(f);});
+fi.addEventListener('change',e=>{if(e.target.files[0])load(e.target.files[0]);});
+
+function load(f){
+  const r=new FileReader();
+  r.onload=e=>parse(e.target.result);
+  r.readAsText(f,'UTF-8');
+}
+
+function ct(t){return t.replace(/\s/g,'').replace(/^00/,'+');}
+function tcName(s){if(!s)return '';return s.toLowerCase().split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');}
+
+function parse(txt){
+  const lines=txt.trim().split('\n').map(l=>l.trim()).filter(l=>l);
+  const sep=(lines[0].split(';').length>lines[0].split(',').length)?';':',';
+  let hIdx=0;
+  for(let i=0;i<Math.min(lines.length,5);i++){
+    const cols=lines[i].split(sep).map(x=>x.trim().toLowerCase().replace(/Ä°/g,'i').replace(/Ä±/g,'i'));
+    if(cols.some(c=>c.includes('isim')||c.includes('telefon')||c.includes('tel')||c.includes('ad'))){hIdx=i;break;}
+  }
+  const h=lines[hIdx].split(sep).map(x=>x.trim().replace(/^\uFEFF/,''));
+  const ii=h.findIndex(x=>x.replace(/Ä°/g,'I').replace(/Ä±/g,'i').toLowerCase().includes('isim')||x.toLowerCase().includes('ad'));
+  const it=h.findIndex(x=>x.toLowerCase().includes('telefon')||x.toLowerCase().includes('tel'));
+  if(it<0){toast('Telefon sÃ¼tunu bulunamadÄ±.','e');return;}
+  people=lines.slice(hIdx+1).map(l=>{
+    const c=l.split(sep).map(x=>x.trim());
+    return{isim:ii>=0?c[ii]||'':'',tel:ct(c[it]||'')};
+  }).filter(r=>r.tel&&r.tel.length>5);
+  if(!people.length){toast('HiÃ§ geÃ§erli numara bulunamadÄ±.','e');return;}
+  sentSet.clear();
+  sendActive=false;
+  document.removeEventListener('visibilitychange',onVisChange);
+  render();
+  dz.style.display='none';
+  document.getElementById('main').style.display='block';
+}
+
+// ââ Render âââââââââââââââââââââââââââââââââââââââââââââââââ
+function render(){
+  updateStats();
+  const cards=document.getElementById('cards');
+  cards.innerHTML=people.map((p,i)=>{
+    const sent=sentSet.has(i);
+    return`<div class="pc${sent?' sent':''}" id="pc${i}">
+      <div class="pc-left">
+        <span class="pn">${i+1}</span>
+        <div>
+          <p class="pm">${tcName(p.isim)||'â'}</p>
+          <p class="pt">${p.tel}</p>
+        </div>
+      </div>
+      <div class="pc-right">
+        <button class="wa-btn${sent?' sent':''}" id="wab${i}" onclick="sendOne(${i})">
+          ${sent?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f5c2a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> GÃ¶nderildi':WA_SVG+' GÃ¶nder'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('listLbl').textContent=`KatÄ±lÄ±mcÄ±lar (${people.length} kiÅi)`;
+  updateSendAllBtn();
+}
+
+function updateStats(){
+  const total=people.length, sent=sentSet.size, rem=total-sent;
+  document.getElementById('statsBar').innerHTML=`
+    <div class="stat-box"><p class="stat-n">${total}</p><p class="stat-l">Toplam KiÅi</p></div>
+    <div class="stat-box sent"><p class="stat-n">${sent}</p><p class="stat-l">GÃ¶nderildi</p></div>
+    <div class="stat-box rem"><p class="stat-n">${rem}</p><p class="stat-l">Bekliyor</p></div>`;
+}
+
+// ââ Send âââââââââââââââââââââââââââââââââââââââââââââââââââ
+function getMsg(){return document.getElementById('msg').value.trim();}
+
+function sendOne(i){
+  const p=people[i];
+  if(!p)return;
+  const msg=getMsg();
+  const tel=p.tel.replace(/[^0-9]/g,'');
+  window.open('https://wa.me/'+tel+(msg?'?text='+encodeURIComponent(msg):''),'_blank');
+  markSent(i);
+}
+
+function markSent(i){
+  if(sentSet.has(i))return;
+  sentSet.add(i);
+  const card=document.getElementById('pc'+i);
+  if(card)card.className='pc sent';
+  const btn=document.getElementById('wab'+i);
+  if(btn){btn.className='wa-btn sent';btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f5c2a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> GÃ¶nderildi';}
+  updateStats();
+  updateSendAllBtn();
+}
+
+function startSendAll(){
+  if(!getMsg()){toast('Ãnce bir mesaj yazÄ±n.','e');return;}
+  sendQueue=people.map((_,i)=>i).filter(i=>!sentSet.has(i));
+  if(!sendQueue.length){toast('Hepsi zaten gÃ¶nderildi â','s');return;}
+  sendIdx=0;sendActive=true;
+  document.addEventListener('visibilitychange',onVisChange);
+  openNext();
+}
+
+function openNext(){
+  if(sendIdx>=sendQueue.length){
+    sendActive=false;
+    document.removeEventListener('visibilitychange',onVisChange);
+    updateSendAllBtn();
+    toast(`${sendQueue.length} kiÅiye mesaj gÃ¶nderildi â`,'s');
+    return;
+  }
+  const i=sendQueue[sendIdx++];
+  sendOne(i);
+  updateSendAllBtn();
+}
+
+function onVisChange(){
+  if(document.visibilityState==='visible'&&sendActive)setTimeout(openNext,500);
+}
+
+function updateSendAllBtn(){
+  const btn=document.getElementById('sendAllBtn');
+  if(!btn)return;
+  const rem=people.length-sentSet.size;
+  if(sendActive){
+    btn.className='send-all-btn progress';
+    btn.innerHTML=`â³ ${sendIdx}/${sendQueue.length} GÃ¶nderiliyorâ¦`;
+  } else if(rem===0){
+    btn.className='send-all-btn done';
+    btn.innerHTML='â TÃ¼mÃ¼ GÃ¶nderildi';
+  } else {
+    btn.className='send-all-btn';
+    btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:4px"><polyline points="22 2 11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Hepsine GÃ¶nder';
+  }
+}
+
+function resetSent(){
+  sentSet.clear();sendActive=false;
+  document.removeEventListener('visibilitychange',onVisChange);
+  render();
+}
+
+function toast(m,t){
+  const el=document.getElementById('toast');
+  el.textContent=m;el.className='toast '+(t||'s');el.style.display='block';
+  setTimeout(()=>el.style.display='none',2500);
+}
+</script>
+</body>
+</html>
