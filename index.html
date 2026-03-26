@@ -124,8 +124,8 @@ textarea:focus{border-color:#2AB7B1;}
       </div>
       <div id="cards"></div>
       <button class="save-btn" onclick="saveList()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Kaydet &amp; Bağlantıyı Paylaş
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Kaydet
       </button>
     </div>
     <div class="toast" id="toast"></div>
@@ -202,7 +202,7 @@ async function saveList(){
     await apiPut({contacts:people},d._sha);
     toast('Kaydedildi! Bağlantı paylaşılabilir ✓','s');
   }catch(e){toast('Kaydetme başarısız: '+e.message,'e');}
-  finally{if(btn){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Kaydet &amp; Bağlantıyı Paylaş';}}
+  finally{if(btn){btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Kaydet';}}
 }
 async function apiGet(){const r=await fetch('/api/data');if(!r.ok)throw new Error('API hatası');return r.json();}
 async function apiPut(data,sha){const r=await fetch('/api/data',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({data,sha})});if(!r.ok)throw new Error('Kaydetme hatası');return r.json();}
