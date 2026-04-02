@@ -1,1 +1,23 @@
-{"contacts":[{"isim":"İlker Sağdilek","tel":"491721065559"},{"isim":"Nilüfer Sağdilek","tel":"4915255615179"},{"isim":"Levent Özkan","tel":"31615072805"},{"isim":"Hakan Yıldız","tel":"905453820316"},{"isim":"Yusuf Ege Sağdilek","tel":"4915203962003"},{"isim":"Ali Kaan Sağdilek","tel":"491731550026"}]}
+{
+  "contacts": [
+    {
+      "isim": "İlker Sağdilek",
+      "tel": "491721065559"
+    },
+    {
+      "isim": "Nilüfer Sağdilek",
+      "tel": "4915255615179"
+    },
+    {
+      "isim": "Yusuf Ege Sağdilek",
+      "tel": "4915203962003"
+    },
+    {
+      "isim": "Ali Kaan Sağdilek",
+      "tel": "491731550026"
+    }
+  ],
+  "familyVoting": {
+    "days": {}
+  }
+}
