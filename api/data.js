@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const GH_TOKEN = process.env.GH_TOKEN;
-  const DATA_URL = 'https://api.github.com/repos/ilkersagdilek/wa-bulk-sender/contents/data.json';
+  const DATA_URL = 'https://api.github.com/repos/ilkersagdilek/family-dinner-voting/contents/data.json';
   const headers = { 'Authorization': 'Bearer ' + GH_TOKEN, 'Content-Type': 'application/json' };
 
   if (req.method === 'GET') {
